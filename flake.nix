@@ -1,31 +1,21 @@
 {
   description = "kas-moe-back development environment reproducible build";
+
   inputs = {
-    stable.url = "github:NixOS/nixpkgs/nixos-20.03";
     unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
+
   outputs = inputs:
     let
-      lib = inputs.stable.lib;
       system = "x86_64-linux";
-      unstable-pkgs = inputs.unstable.legacyPackages.${system};
-      pkgs = inputs.stable.legacyPackages.${system};
-      runtimeDeps = with pkgs; [ ];
-      config = { projectDir = ./.; };
-      app = unstable-pkgs.poetry2nix.mkPoetryApplication config // {
-        propagatedBuildInputs = runtimeDeps;
-      };
-      # env = app.dependencyEnv;
-      env = pkgs.poetry2nix.mkPoetryEnv config;
+      pkgs = inputs.unstable.legacyPackages.${system};
+      env = pkgs.poetry2nix.mkPoetryEnv { projectDir = ./.; };
     in {
       devShell."${system}" = pkgs.mkShell {
-        buildInputs = with pkgs;
-          [ poetry ] ++ runtimeDeps
-          ++ (if (builtins.pathExists ./poetry.lock) then [ env ] else [ ]);
-        shellHook = ''
-          cat README
-        '';
+        buildInputs = with pkgs; [
+	  env
+	  python38Packages.invoke
+	];
       };
-      defaultPackage."${system}" = app;
     };
 }

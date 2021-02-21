@@ -24,6 +24,12 @@ let statusDatabase = {
 	time: "YYYY-MM-DD",
 };
 
+let statusRoll = {
+	a: false,
+	b: true,
+	c: true,
+};
+
 module.exports = [
 	{
 		method: "POST",
@@ -78,6 +84,27 @@ module.exports = [
 			statusDatabase = {
 				status: phase,
 				time: date,
+			};
+			return h.response().code(200);
+			// }
+			// return h.response().code(401);
+		},
+	},
+	{
+		method: "GET",
+		path: "/roll",
+		handler: () => statusRoll,
+	},
+	{
+		method: "PATCH",
+		path: "/roll",
+		handler: (request, h) => {
+			const { a, b, c } = request.payload;
+			// if (request.auth.credentials) {
+			statusRoll = {
+				a: a,
+				b: b,
+				c: c
 			};
 			return h.response().code(200);
 			// }

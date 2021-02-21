@@ -19,6 +19,15 @@ def serve(c):
     c.run("cd src && poetry run uvicorn main:app --reload", pty=True)
 
 
+@task
+def flake8(ctx):
+    """Run flake8 with proper exclusions."""
+    ctx.run(
+        f'flake8 {package_name}/',
+        echo=True,
+    )
+
+
 @task(
     aliases=['cc'],
     help={

@@ -17,7 +17,8 @@
 	  python38Packages.pip
 	  python38Packages.invoke
 	  python38Packages.flake8
-	];
+	  python38Packages.flake8-polyfill
+        ];
 	shellHook = ''
 	  export PIP_DISABLE_PIP_VERSION_CHECK=1;
 	  pip install radon;

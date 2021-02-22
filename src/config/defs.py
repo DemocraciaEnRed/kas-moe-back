@@ -19,4 +19,3 @@ class LogLevel(str, Enum):
 
 base_dir: str = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 package_name: str = os.path.basename(base_dir)
-

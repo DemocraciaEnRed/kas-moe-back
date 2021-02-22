@@ -5,7 +5,7 @@
 
 from invoke import task
 
-from src.conf.defs import package_name
+from src.config.defs import package_name
 
 
 @task(
@@ -20,7 +20,7 @@ def serve(c):
 
 
 @task
-def flake8(ctx):
+def lint(ctx):
     """Run flake8 with proper exclusions."""
     ctx.run(
         f'flake8 {package_name}/',

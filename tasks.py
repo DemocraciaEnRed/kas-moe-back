@@ -19,7 +19,7 @@ def serve(ctx, development=False):
     """Run a development or production server."""
     if development:
         ctx.run(
-            f'uvicorn {package_name}.main:app --reload',
+            f'cd {package_name} && uvicorn main:app --reload',
             echo=True,
             pty=True,
             env={
@@ -30,8 +30,8 @@ def serve(ctx, development=False):
         )
     else:
         ctx.run(
-            f'gunicorn --config {package_name}/conf/gunicorn.py --pythonpath "$(pwd)"'
-            f' {package_name}.main:app',
+            f'cd {package_name} && gunicorn --config config/gunicorn.py --pythonpath "$(pwd)"'
+            f' main:app',
             echo=True,
         )
 

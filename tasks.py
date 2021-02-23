@@ -6,17 +6,34 @@
 from invoke import task
 
 from src.config.defs import package_name
+from src.config.glob import ENV_PREFIX
 
 
 @task(
     default=True,
     help={
-        'serve': 'run a development server'
+        'development': 'run a development server'
     }
 )
-def serve(c):
-    """Run a development server."""
-    c.run("cd src && poetry run uvicorn main:app --reload", pty=True)
+def serve(ctx, development=False):
+    """Run a development or production server."""
+    if development:
+        ctx.run(
+            f'uvicorn {package_name}.main:app --reload',
+            echo=True,
+            pty=True,
+            env={
+                f'{ENV_PREFIX}ALLOWED_HOSTS': '["127.0.0.1"]',
+                f'{ENV_PREFIX}DEVELOPMENT_MODE': 'true',
+            }
+
+        )
+    else:
+        ctx.run(
+            f'gunicorn --config {package_name}/conf/gunicorn.py --pythonpath "$(pwd)"'
+            f' {package_name}.main:app',
+            echo=True,
+        )
 
 
 @task

@@ -3,7 +3,6 @@
 
   inputs = {
     stable.url = "github:NixOS/nixpkgs/nixos-20.09";
-    unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
 
   outputs = inputs:

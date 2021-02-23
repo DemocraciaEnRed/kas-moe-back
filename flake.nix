@@ -14,9 +14,12 @@
     in {
       devShell."${system}" = pkgs.mkShell {
         buildInputs = with pkgs; [ env
+          python38Packages.poetry
           python38Packages.invoke
           python38Packages.flake8
           python38Packages.flake8-polyfill
+          python38Packages.uvicorn
+          python38Packages.gunicorn
         ];
       };
     };

@@ -13,6 +13,8 @@
     in {
       devShell."${system}" = pkgs.mkShell {
         buildInputs = with pkgs; [ env
+	  openssl
+	  postgresql
           python38Packages.poetry
           python38Packages.invoke
           python38Packages.flake8

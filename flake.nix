@@ -13,6 +13,7 @@
     in {
       devShell."${system}" = pkgs.mkShell {
         buildInputs = with pkgs; [ env
+	  cookiecutter
 	  openssl
 	  postgresql
           python38Packages.poetry

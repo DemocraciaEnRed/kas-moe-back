@@ -36,11 +36,6 @@ app.include_router(auth.routes)
 app.include_router(users.routes)
 
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-
 @app.on_event("startup")
 async def startup():
     await database.connect()

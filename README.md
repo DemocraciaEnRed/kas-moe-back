@@ -1,12 +1,12 @@
 # Introducción
 
-Aquí yacen los archivos necesarios para desarrollar y ejecutar el núcleo de la Misión Observatorio Electoral (MOE). El mismo consta de un _BackEnd_ monolítico basado en Python que compone una API a disposición de los diferentes métodos:
+Aquí yacen los archivos necesarios para desarrollar y ejecutar el núcleo de la Misión Observatorio Electoral (MOE). El mismo consta de un _BackEnd_ monolítico basado en Python que compone una API a disposición de los diferentes procesos:
 
 * Autenticación
-* Votación
-* Permisos
+* Usuarios/Roles
+* Electoral
 
-Estos métodos propios de la API están autodocumentados mediante OpenAPI.
+Estos métodos propios de la API irán autodocumentados mediante OpenAPI.
 
 # Desarrollo
 
@@ -55,6 +55,10 @@ para instanciar los contenedores necesarios en base a las imágenes dadas.
 
 _To-Do ..._
 
+* Análisis estático
+* Tests de performance y accesibilidad
+* Escaneo de dependencias
+
 # Arquitectura
 
 A continuación una lista de características del sistema:
@@ -66,3 +70,5 @@ A continuación una lista de características del sistema:
 Los diferentes motivos por los cuales rigen ciertas tecnologías por sobre otras, respecto de las diversas partes que componen al sistema en su totalidad, están deteallados en el directorio `/docs/adr-*`. A su vez, dicha ruta contendrá otra clase de documentación como lo son los `guidelines` ó las guías de trabajo.
 
 Esto debería no sólo justificar sino también facilitar el por qué de las decisiones y opiniones de arquitectura tomadas durante las etapas del desarrollo a quienes corresponda heredar el mismo.
+
+_To-Do: Web3py ADRs_

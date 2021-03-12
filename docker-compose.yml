@@ -1,0 +1,55 @@
+version: '3.3'
+
+
+services:
+
+  database:
+    image: mongo:bionic
+    restart: unless-stopped
+    volumes:
+      - "db-data:/data/db"
+    env_file:
+      - .database.env
+    ports:
+      - "27017-27019:27017-27019"
+    networks:
+      - private-app
+
+  backend:
+    build: ./
+    restart: unless-stopped
+    volumes:
+      - ./:/app
+    env_file:
+      - .backend.env
+    command: /start-reload.sh
+    depends_on:
+      - database
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=public-proxy"
+      - "traefik.http.services.backend.loadbalancer.server.port=8000"
+      - "traefik.http.routers.backend-http.entrypoints=http"
+      - "traefik.http.routers.backend-http.rule=Host(`api.aglug.org`, `api.cyph.red`)"
+      - "traefik.http.routers.backend-https.entrypoints=https"
+      - "traefik.http.routers.backend-https.rule=Host(`api.aglug.org`, `api.cyph.red`)"
+      - "traefik.http.routers.backend-https.tls=true"
+      - "traefik.http.routers.backend-https.tls.certresolver=le"
+    networks:
+      - public-proxy
+      - private-app
+
+
+networks:
+
+  public-proxy:
+    external: true
+  
+  private-app:
+    driver: bridge
+
+
+volumes:
+
+  db-data:
+    driver: local

@@ -1,0 +1,11 @@
+services:
+
+  backend:
+    ports:
+      - "8000:8000"
+
+
+networks:
+
+  proxy-public:
+    external: false

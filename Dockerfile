@@ -1,8 +1,5 @@
 FROM tiangolo/uvicorn-gunicorn-fastapi:python3.8
 
-ENV PYTHONPATH "${PYTHONPATH}:/"
-ENV PORT=8000
-
 # Install Poetry
 RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | POETRY_HOME=/opt/poetry python && \
     cd /usr/local/bin && \
@@ -14,4 +11,9 @@ COPY ./pyproject.toml ./poetry.lock* /app/
 
 RUN poetry install --no-root --no-dev
 
-COPY ./src /app
+COPY ./ /app
+
+ENV PYTHONPATH=/app
+
+ENV PORT=8000
+ENV MODULE_NAME=src.main

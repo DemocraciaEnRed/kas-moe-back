@@ -115,6 +115,7 @@ env.bak/
 venv.bak/
 .backend.env
 .database.env
+.database-admin.env
 
 # Spyder project settings
 .spyderproject

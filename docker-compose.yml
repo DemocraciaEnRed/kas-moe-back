@@ -15,6 +15,18 @@ services:
     networks:
       - private-app
 
+  database-admin:
+    image: mongo-express:0.54
+    restart: unless-stopped
+    depends_on:
+      - database
+    ports:
+      - "8081:8081"
+    env_file:
+      - .database-admin.env
+    networks:
+      - private-app
+
   backend:
     build: ./
     restart: unless-stopped
@@ -25,25 +37,11 @@ services:
     command: /start-reload.sh
     depends_on:
       - database
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=public-proxy"
-      - "traefik.http.services.backend.loadbalancer.server.port=8000"
-      - "traefik.http.routers.backend-http.entrypoints=http"
-      - "traefik.http.routers.backend-http.rule=Host(`api.aglug.org`, `api.cyph.red`)"
-      - "traefik.http.routers.backend-https.entrypoints=https"
-      - "traefik.http.routers.backend-https.rule=Host(`api.aglug.org`, `api.cyph.red`)"
-      - "traefik.http.routers.backend-https.tls=true"
-      - "traefik.http.routers.backend-https.tls.certresolver=le"
     networks:
-      - public-proxy
       - private-app
 
 
 networks:
-
-  public-proxy:
-    external: true
   
   private-app:
     driver: bridge

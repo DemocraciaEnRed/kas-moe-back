@@ -1,8 +1,9 @@
 [tool.poetry]
-name = "moe-backend"
+name = "kas-moe-back"
 version = "0.1.0"
-description = ""
-authors = ["Your Name <you@example.com>"]
+description = "KAS MOE BackEnd"
+authors = ["Federico Corvalán <hi@fedr.cc>"]
+license = "MPL-2.0"
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -10,6 +11,8 @@ fastapi = "^0.63.0"
 uvicorn = {extras = ["standard"], version = "^0.13.4"}
 fastapi-users = {extras = ["mongodb"], version = "^5.1.0"}
 motor = "^2.3.1"
+httpx = "0.17.0"
+Jinja2 = "^2.11.3"
 
 [tool.poetry.dev-dependencies]
 

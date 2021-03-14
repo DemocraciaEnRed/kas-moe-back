@@ -1,16 +1,22 @@
-import os
+from os import getenv
+
 import motor.motor_asyncio
+
 from fastapi import Depends, FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+
 from fastapi_users import FastAPIUsers, models
 from fastapi_users.authentication import JWTAuthentication
 from fastapi_users.authentication import CookieAuthentication
 from fastapi_users.db import MongoDBUserDatabase
 
+from src.services import email as Email
+
+
 
 """ To-Do: Implement proper assertion of environment variables
 assert all([
-    os.getenv(var)
+    getenv(var)
     for var
     in [
         'DATABASE_URL'
@@ -22,7 +28,7 @@ assert all([
 
 
 
-JWT_SECRET = os.getenv('JWT_SECRET')
+JWT_SECRET = getenv('JWT_SECRET')
 
 
 auth_backends = []
@@ -43,10 +49,6 @@ auth_backends.append(cookie_authentication)
 
 
 
-MAILGUN_API_KEY = os.getenv('MAILGUN_API_KEY')
-
-
-
 class User(models.BaseUser):
     pass
 
@@ -64,8 +66,7 @@ class UserDB(User, models.BaseUserDB):
 
 
 
-DATABASE_URL = os.getenv('DATABASE_URL')
-
+DATABASE_URL = getenv('DATABASE_URL')
 
 client = motor.motor_asyncio.AsyncIOMotorClient(
     DATABASE_URL, uuidRepresentation="standard"
@@ -79,36 +80,42 @@ user_db = MongoDBUserDatabase(UserDB, collection)
 
 
 
-def on_after_register(user: UserDB, request: Request):
-    print(f"User {user.id} has registered.")
+email = Email.sender()
 
 
-def on_after_forgot_password(user: UserDB, token: str, request: Request):
+async def on_after_register(user: UserDB, request: Request):
+    print(f"User {user.id} has registered. An email will be sent.")
+    values = { 
+        "email": user.email
+    }
+    await email.on_register(values)
+
+
+async def on_after_forgot_password(user: UserDB, token: str, request: Request):
     print(f"User {user.id} has forgot their password. Reset token: {token}")
+    values = { 
+        "email": user.email,
+        "token": token
+    }
+    await email.on_recovery(values)
 
 
-def after_verification_request(user: UserDB, token: str, request: Request):
+async def after_verification_request(user: UserDB, token: str, request: Request):
     print(f"Verification requested for user {user.id}. Verification token: {token}")
+    values = { 
+        "email": user.email,
+        "token": token
+    }
+    await email.on_verification(values)
 
 
 
-app = FastAPI(title="MOE Authentication API")
-
-origins = [
-    "http://cyph.red",
-    "https://cyph.red",
-    "http://aglug.org",
-    "http://aglug.org:3000",
-    "https://glug.org",
-    "http://localhost",
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "http://localhost:8080",
-]
+app = FastAPI(title=getenv('OAS_TITLE'))
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=getenv('ORIGINS'),
+    #allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

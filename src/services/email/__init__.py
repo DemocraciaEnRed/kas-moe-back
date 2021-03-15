@@ -2,7 +2,7 @@ import json
 import asyncio
 from os import getenv
 from httpx import AsyncClient
-from jinja2 import Environment, FileSystemLoader, Template
+from jinja2 import Environment, FileSystemLoader
 
 
 """ To-Do: Implement asyncio.Lock() and LRU caches """

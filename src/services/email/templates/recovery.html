@@ -6,8 +6,8 @@
     <body>
         <p>Hubo una solicitud para recuperar la cuenta:</p>
         <p>{{ email }}</p>
-        <p>Para recuperarla deberás utilizar el siguiente token:</p>
-        <p>{{ token }}</p>
+        <p>Puedes recuperar tu cuenta accediendo al siguiente link:</p>
+        <a href="https://aglug.org/auth/recovery?token={{ token }}">https://aglug.org/auth/verify?token={{ token }}</a>
         <p>Este token tiene una duración limitada.</p>
     </body>
 </html>

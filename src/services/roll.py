@@ -7,22 +7,19 @@ from fastapi.encoders import jsonable_encoder
 from src.models.roll import Item, collection
 
 
-
 class manage():
 
     def __init__(self):      
         """ Check if collection properly exist """
 
+
     async def validate(self, upload) -> bool:
         """ Verify file (extension) magic numbers """
-        return True
 
 
     async def read(self) -> str:
         """ Read list from roll collection """
         data = jsonable_encoder([])
-        test = await collection.find_one({"ID":"85323292"})
-        print(test)
         for row in await collection.find().to_list(length=5):
             row.pop("_id")
             data.append(row)

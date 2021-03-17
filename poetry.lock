@@ -235,6 +235,24 @@ python-versions = ">=3.5.2"
 pymongo = ">=3.11,<4"
 
 [[package]]
+name = "motor-odm"
+version = "0.1.dev0"
+description = "A MongoDB ODM based on Motor and Pydantic."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+Motor = "*"
+Pydantic = "*"
+PyMongo = "*"
+
+[package.extras]
+dev = ["pytest", "pytest-cov", "pytest-asyncio", "flake8", "isort", "mypy", "black", "invoke"]
+docs = ["setuptools-scm", "sphinx-rtd-theme", "sphinxcontrib-apidoc"]
+typing = ["fastapi"]
+
+[[package]]
 name = "numpy"
 version = "1.20.1"
 description = "NumPy is the fundamental package for array computing with Python."
@@ -498,7 +516,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "4f4dbeb09de8c199cc0e2534749b393f30834ae3a54b11ab7e04dfb0dbdd95ef"
+content-hash = "1a1723265795f83362752ced1d78b2f103b354c929e2c62e87215925d28f5f32"
 
 [metadata.files]
 bcrypt = [
@@ -676,6 +694,10 @@ markupsafe = [
 motor = [
     {file = "motor-2.3.1-py3-none-any.whl", hash = "sha256:ea5a8f5c7cbb08b7c301d7c66746fc96333d634182df236dff0f814f802fe232"},
     {file = "motor-2.3.1.tar.gz", hash = "sha256:319df35ef9d4099dc125b7d46b552fa88578675e0b06cab94624c666bb0a8a90"},
+]
+motor-odm = [
+    {file = "Motor-ODM-0.1.dev0.tar.gz", hash = "sha256:a604e7335db1be22718f51f9fee10f015c8777a112457e31e0d28a2afc0346ca"},
+    {file = "Motor_ODM-0.1.dev0-py3-none-any.whl", hash = "sha256:86bc245ed8c54f72e833f71985785b0132f6f181527bc5de6a4f3a67301d5022"},
 ]
 numpy = [
     {file = "numpy-1.20.1-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:ae61f02b84a0211abb56462a3b6cd1e7ec39d466d3160eb4e1da8bf6717cdbeb"},

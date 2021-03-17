@@ -15,14 +15,19 @@ auth_backends = []
 
 
 cookie_authentication = CookieAuthentication(
-    secret=Key.COOKIE, lifetime_seconds=Key.EXPIRY, name="x-moe-code-long"
+    secret=Key.COOKIE,
+    lifetime_seconds=Key.EXPIRY,
+    cookie_name="x-moe-code-long",
+    cookie_secure=False # Until TLS works properly 
 )
 
 auth_backends.append(cookie_authentication)
 
 
 jwt_authentication = JWTAuthentication(
-    secret=Key.JWT, lifetime_seconds=Key.EXPIRY, tokenUrl=Key.JWT_PATH
+    secret=Key.JWT,
+    lifetime_seconds=Key.EXPIRY,
+    tokenUrl=Key.JWT_PATH
 )
 
 auth_backends.append(jwt_authentication)
